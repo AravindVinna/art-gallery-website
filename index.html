@@ -210,18 +210,24 @@ Creating with passion. Growing with purpose.
     </div>
   </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
 
 // ================= LOGIN =================
-document.getElementById("loginForm").addEventListener("submit", async function(e){
+
+const loginForm = document.getElementById("loginForm");
+
+if(loginForm){
+
+loginForm.addEventListener("submit", async function(e){
 
 e.preventDefault();
 
 const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
+
+try{
 
 const res = await fetch("https://art-gallery-website-x2mk.onrender.com/login",{
 method:"POST",
@@ -236,7 +242,6 @@ const data = await res.json();
 if(data.success){
 
 alert("Login successful");
-
 window.location.href="home.html";
 
 }else{
@@ -245,57 +250,92 @@ document.getElementById("msg").innerText=data.message;
 
 }
 
+}catch(error){
+
+document.getElementById("msg").innerText="Server not running";
+
+}
+
 });
+
+}
+
+
 // ================= CART =================
+
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 updateCartCount();
 
 function addToCart(name, price){
-    cart.push({name, price});
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateCartCount();
+cart.push({name, price});
+localStorage.setItem("cart", JSON.stringify(cart));
+updateCartCount();
 }
 
 function updateCartCount(){
-    document.getElementById("cart-count").innerText = cart.length;
+
+const cartCount = document.getElementById("cart-count");
+
+if(cartCount){
+cartCount.innerText = cart.length;
+}
+
 }
 
 function openCart(){
-    let cartItemsDiv = document.getElementById("cartItems");
-    cartItemsDiv.innerHTML = "";
-    let total = 0;
 
-    cart.forEach((item, index) => {
-        total += item.price;
-        cartItemsDiv.innerHTML += `
-            <div class="d-flex justify-content-between mb-2">
-                <span>${item.name} - ₹${item.price}</span>
-                <button class="btn btn-sm btn-danger" onclick="removeItem(${index})">X</button>
-            </div>
-        `;
-    });
+let cartItemsDiv = document.getElementById("cartItems");
 
-    document.getElementById("cartTotal").innerText = total;
+if(!cartItemsDiv) return;
 
-    let modal = new bootstrap.Modal(document.getElementById('cartModal'));
-    modal.show();
+cartItemsDiv.innerHTML = "";
+
+let total = 0;
+
+cart.forEach((item, index) => {
+
+total += item.price;
+
+cartItemsDiv.innerHTML += `
+<div class="d-flex justify-content-between mb-2">
+<span>${item.name} - ₹${item.price}</span>
+<button class="btn btn-sm btn-danger" onclick="removeItem(${index})">X</button>
+</div>
+`;
+
+});
+
+document.getElementById("cartTotal").innerText = total;
+
+let modal = new bootstrap.Modal(document.getElementById('cartModal'));
+modal.show();
+
 }
 
 function removeItem(index){
-    cart.splice(index,1);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateCartCount();
-    openCart();
+
+cart.splice(index,1);
+
+localStorage.setItem("cart", JSON.stringify(cart));
+
+updateCartCount();
+
+openCart();
+
 }
 
 function clearCart(){
-    cart = [];
-    localStorage.removeItem("cart");
-    updateCartCount();
-    openCart();
+
+cart = [];
+
+localStorage.removeItem("cart");
+
+updateCartCount();
+
+openCart();
+
 }
 
 </script>
-
 </body>
 </html>
