@@ -230,35 +230,38 @@ const password = document.getElementById("password").value;
 try{
 
 const res = await fetch("https://art-gallery-website-1.onrender.com/login",{
-    method:"POST",
-    headers:{
-        "Content-Type":"application/json"
-    },
-    body:JSON.stringify({email,password})
-})
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({email,password})
+});
 
 const data = await res.json();
 
 if(data.success){
 
 alert("Login successful");
-window.location.href="/art-gallery-website/index.html";
+
+window.location.href="index.html";
 
 }else{
 
-document.getElementById("msg").innerText=data.message;
+document.getElementById("msg").innerText = data.message;
 
 }
 
 }catch(error){
 
-document.getElementById("msg").innerText="Server not running";
+document.getElementById("msg").innerText = "Server not responding. Please try again.";
 
 }
 
 });
 
 }
+
+</script>
 
 
 // ================= CART =================
