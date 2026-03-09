@@ -57,12 +57,12 @@ e.preventDefault();
 const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
 
-const res = await fetch("http://localhost:5000/register",{
-
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({email,password})
-
+const res = await fetch("https://art-gallery-website-x2mk.onrender.com/register", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({email,password})
 });
 
 const data = await res.json();
