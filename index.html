@@ -216,45 +216,36 @@ Creating with passion. Growing with purpose.
 <script>
 
 // ================= LOGIN =================
-document.getElementById("loginForm").addEventListener("submit", async function(event){
-    event.preventDefault();
+document.getElementById("loginForm").addEventListener("submit", async function(e){
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+e.preventDefault();
 
-    try{
-     const res = await fetch("http://localhost:5000/login",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({email,password})
-});
-        const data = await res.json();
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
 
-        if(data.success){
-            localStorage.setItem("loggedIn","true");
-            showStore();
-        }else{
-            document.getElementById("loginMessage").innerText = data.message;
-        }
-    }catch(error){
-        alert("Server not running");
-    }
+const res = await fetch("https://art-gallery-website-x2mk.onrender.com/login",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({email,password})
 });
 
-function logout(){
-    localStorage.removeItem("loggedIn");
-    location.reload();
+const data = await res.json();
+
+if(data.success){
+
+alert("Login successful");
+
+window.location.href="home.html";
+
+}else{
+
+document.getElementById("msg").innerText=data.message;
+
 }
 
-function showStore(){
-    document.getElementById("loginPage").style.display="none";
-    document.getElementById("storePage").style.display="block";
-}
-
-if(localStorage.getItem("loggedIn") === "true"){
-    showStore();
-}
-
+});
 // ================= CART =================
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 updateCartCount();
