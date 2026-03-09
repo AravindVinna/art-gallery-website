@@ -229,13 +229,13 @@ const password = document.getElementById("password").value;
 
 try{
 
-const res = await fetch("https://art-gallery-website-x2mk.onrender.com/login",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({email,password})
-});
+const res = await fetch("https://art-gallery-website-1.onrender.com/login",{
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json"
+    },
+    body:JSON.stringify({email,password})
+})
 
 const data = await res.json();
 
